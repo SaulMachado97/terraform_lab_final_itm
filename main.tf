@@ -145,7 +145,7 @@ chown -R ubuntu:www-data /var/www
 chmod 2775 /var/www
 find /var/www -type d -exec chmod 2775 {} \;
 find /var/www -type f -exec chmod 0664 {} \;
-# Create a simple PHP file for testing
+#Create a simple PHP file for testing
 echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 EOF
 }
