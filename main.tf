@@ -129,12 +129,15 @@ apt-get upgrade -y
 export TZ=America/Bogota
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 apt-get install -y tzdata
-#Instalacion python3, pip package manage and virtualenv
-apt-get install -y apache2 php libapache2-mod-php
+#Instalacion apache como servidor
+apt-get install -y apache2 mariadb-server php libapache2-mod-php
 # Start and enable Apache service
 systemctl start apache2
 systemctl enable apache2
-# Add ec2-user to the apache group
+# Start and enable MariaDB service
+systemctl start mariadb
+systemctl enable mariadb
+# Add ec2-user to the www-data group
 usermod -a -G www-data ubuntu
 # Grant ownership to ec2-user
 chown -R ubuntu:www-data /var/www
@@ -142,8 +145,7 @@ chown -R ubuntu:www-data /var/www
 chmod 2775 /var/www
 find /var/www -type d -exec chmod 2775 {} \;
 find /var/www -type f -exec chmod 0664 {} \;
-# Download sample PHP file
-cd /var/www/html
-wget https://raw.githubusercontent.com/AbhishekGit-AWS/beanStalk/master/index.php
+# Create a simple PHP file for testing
+echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 EOF
 }
