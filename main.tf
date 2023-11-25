@@ -145,6 +145,5 @@ find /var/www -type f -exec chmod 0664 {} \;
 # Download sample PHP file
 cd /var/www/html
 wget https://raw.githubusercontent.com/AbhishekGit-AWS/beanStalk/master/index.php
-systemctl restart httpd
 EOF
 }
