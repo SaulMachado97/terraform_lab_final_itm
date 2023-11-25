@@ -1,0 +1,31 @@
+name: terraform-deploy-aws
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: "us-east-1"
+
+permissions:
+  id-token: write
+  content: read
+
+jobs:
+  terraform-deploy:
+    name: terraform-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRETS_ACCESS_KEY}}
+          aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
+          aws-region: ${{env.AWS_REGION}}
+
+      - name: Apply terraform
+        run: terraform init && terraform apply --auto-approve
